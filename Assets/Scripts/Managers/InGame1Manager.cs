@@ -11,18 +11,25 @@ public class InGame1Manager : MonoBehaviour
     public HUD_InventoryPool _HUDInventoryPool;
     public HUD_BackGround_InGame1 _HUDBackGround;
     public List<ItemData> _ItemDatas;
+    public List<HUDInventoryNode> _HUDInventoryNodes;
+    public bool[] _baseEnablePosition = new bool[4 * 8];
 
     // private void Awake()
     // {
-    //     _HUDTimer = GetComponent<HUDTimer>();
-    //     _HUDInventoryPool = GetComponent<HUD_InventoryPool>();
-    //     _HUDBackGround = GetComponent<HUD_BackGround_InGame1>();
+    //     // _HUDTimer = GetComponent<HUDTimer>();
+    //     // _HUDInventoryPool = GetComponent<HUD_InventoryPool>();
+    //     // _HUDBackGround = GetComponent<HUD_BackGround_InGame1>();
+    //     _HUDInventoryNodes = new List<HUDInventoryNode>(GetComponentsInChildren<HUDInventoryNode>());
     // }
     public void Initialize()
     {
         _HUDTimer.Initialize();
         _HUDInventoryPool.Initialize();
         _HUDBackGround.Initialize();
+        foreach (var node in _HUDInventoryNodes)
+        {
+            node.Initialize();
+        }
     }
 
     public void Reset()

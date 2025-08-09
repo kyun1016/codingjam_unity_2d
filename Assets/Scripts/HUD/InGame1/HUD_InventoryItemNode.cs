@@ -9,6 +9,7 @@ public class HUD_InventoryItemNode : MonoBehaviour, IPointerEnterHandler, IPoint
     public RectTransform _rectTransform;
     [SerializeField] private Image _image;
     public Vector2Int _gridPosition; // 논리적 좌표
+    
     void Awake()
     {
         _parent = GetComponentInParent<HUD_InventoryItem>();
@@ -39,7 +40,6 @@ public class HUD_InventoryItemNode : MonoBehaviour, IPointerEnterHandler, IPoint
     }
     public void OnDrag(PointerEventData eventData)
     {
-        DevLog.Log($"Dragging Node at position: {eventData.delta}"); // Debug log for dragging
         _parent.Drag(eventData.delta);
     }
     public void OnDrop(PointerEventData eventData)

@@ -6,7 +6,7 @@ using System.Collections.Generic;
 
 public class HUD_RootItemPool : MonoBehaviour
 {
-    [SerializeField] private List<GameObject> _nodes;
+    public List<GameObject> _nodes;
 
     void Awake()
     {

@@ -11,9 +11,12 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
     [SerializeField] private Button _button;
     [SerializeField] private bool _isActive;
     private HUD_InventoryItem currentDraggingItem;
+    public bool _isDropped;
+    public int _index;
 
     void Awake()
     {
+        _index = transform.GetSiblingIndex();
         _button = GetComponent<Button>();
     }
 
@@ -21,6 +24,7 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
     {
         gameObject.SetActive(true);
 
+        _isDropped = false;
         currentDraggingItem = null;
         float para1 = Random.value;
         float para2 = Random.value;
@@ -54,8 +58,14 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
 
     public void OnPointerDown(PointerEventData eventData)
     {
+        if (_isDropped)
+        {
+            gameObject.SetActive(false);
+            return;
+        }
         if (_isActive)
         {
+            _isDropped = true;
             HUD_InventoryItem item = GameManager.instance._InGame1Manager._HUDInventoryPool.GetItem(_itemData.itemID);
             currentDraggingItem = item;
             item.transform.position = _button.transform.position;
@@ -63,8 +73,9 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
             eventData.pointerDrag = item.gameObject;
             ExecuteEvents.Execute(item.gameObject, eventData, ExecuteEvents.beginDragHandler);
         }
-
         _button.OnDeselect(null);
+        if (currentDraggingItem == null)
+            gameObject.SetActive(false);
     }
 
     public void OnDrag(PointerEventData eventData)
@@ -82,8 +93,7 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
         {
             ExecuteEvents.Execute(currentDraggingItem._nodes[0].gameObject, eventData, ExecuteEvents.dropHandler);
             currentDraggingItem = null;
-
-            gameObject.SetActive(false);
         }
+        gameObject.SetActive(false);
     }
 }

@@ -3,31 +3,30 @@ using UnityEngine.UI;
 using System;
 using TMPro;
 
-public class HUDInventoryNode : MonoBehaviour, IHUD
+public class HUDInventoryNode : MonoBehaviour
 {
     [Header("UI Components")]
-    [SerializeField] private SkillData _skillData;
     public bool _isVisible = false;
     [Header("Skill Node Settings")]
     [SerializeField] private Image _image;
-    [SerializeField] private TextMeshProUGUI _skillName;
-    [SerializeField] private TextMeshProUGUI _skillDescription;
+    public int index;
 
     private void Awake()
     {
-        ValidateComponents();
-        Initialize();
-    }
-    
-    #region IHUD Implementation
-    public void ValidateComponents()
-    {
-
+        _image = GetComponent<Image>();
+        index = transform.GetSiblingIndex();
     }
     public void Initialize()
     {
         gameObject.SetActive(true);
-        DevLog.Log("HUDSkillTree: Initialized successfully");
+        if(GameManager.instance._InGame1Manager._baseEnablePosition[index])
+        {
+            _image.color = Color.white;
+        }
+        else
+        {
+            _image.color = new Color(0.5f, 0.5f, 0.2f, 0.5f); // 반투명 처리
+        }
     }
     public void Reset()
     {
@@ -38,7 +37,6 @@ public class HUDInventoryNode : MonoBehaviour, IHUD
     {
         _isVisible = true;
         gameObject.SetActive(true);
-        UpdateDisplay();
     }
     
     public void Hide()
@@ -53,25 +51,5 @@ public class HUDInventoryNode : MonoBehaviour, IHUD
             Hide();
         else
             Show();
-    }
-    
-    public void UpdateUI(){}
-    public void LateUpdateUI(){}
-
-    #endregion
-
-    public void Update()
-    {
-
-    }
-    
-    private void UpdateTimer()
-    {
-
-    }
-    
-    private void UpdateDisplay()
-    {
-        _skillData.skillName = "Skill Tree";
     }
 }
