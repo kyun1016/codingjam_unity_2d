@@ -13,6 +13,7 @@ public class InGame1Manager : MonoBehaviour
     public List<ItemData> _ItemDatas;
     public List<HUDInventoryNode> _HUDInventoryNodes;
     public bool[] _baseEnablePosition = new bool[4 * 8];
+    public int _lastHandleRootItemNodeIndex;
 
     // private void Awake()
     // {

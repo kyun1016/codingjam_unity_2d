@@ -67,6 +67,7 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
         {
             _isDropped = true;
             HUD_InventoryItem item = GameManager.instance._InGame1Manager._HUDInventoryPool.GetItem(_itemData.itemID);
+            GameManager.instance._InGame1Manager._lastHandleRootItemNodeIndex = _index;
             currentDraggingItem = item;
             item.transform.position = _button.transform.position;
 

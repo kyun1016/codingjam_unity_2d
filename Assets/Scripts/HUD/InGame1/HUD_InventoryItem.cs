@@ -110,7 +110,7 @@ public class HUD_InventoryItem : MonoBehaviour
             GameManager.instance._InGame1Manager._HUDInventoryPool.ReleaseItem(_ItemData.itemID, this);
         }
 
-        GameManager.instance._InGame1Manager._HUDBackGround._rootItemPools[GameManager.instance._InGame1Manager._HUDBackGround.index]._nodes[_handleIndex].gameObject.SetActive(false);
+        GameManager.instance._InGame1Manager._HUDBackGround._rootItemPools[GameManager.instance._InGame1Manager._HUDBackGround.index]._nodes[GameManager.instance._InGame1Manager._lastHandleRootItemNodeIndex].gameObject.SetActive(false);
         StartCoroutine(DeactivateAfterDelay(0.3f));
     }
 
