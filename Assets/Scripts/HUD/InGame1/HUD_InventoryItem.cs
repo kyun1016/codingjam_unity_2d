@@ -7,10 +7,10 @@ public class HUD_InventoryItem : MonoBehaviour
 {
     [SerializeField] private HUD_InventoryItemNode _nodePrefab;
     public ItemData _ItemData; // 마우스
-    [SerializeField] private List<HUD_InventoryItemNode> _nodes;
+    public List<HUD_InventoryItemNode> _nodes;
     [SerializeField] private Transform _transform; // 마우스 오버 시 크기 증가 비율
     [SerializeField] private Vector3 _originalScale;
-    [SerializeField] private RectTransform _rectTransform;
+    public RectTransform _rectTransform;
     [SerializeField] private Canvas _canvas;
 
     void Awake()
