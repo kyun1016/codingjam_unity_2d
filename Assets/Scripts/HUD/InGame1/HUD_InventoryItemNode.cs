@@ -3,9 +3,9 @@ using UnityEngine.EventSystems; // 이벤트 시스템 사용을 위해 필수!
 using UnityEngine.UI;           // CanvasGroup을 사용하기 위해 필요
 using UnityEngine.InputSystem;
 
-public class HUD_InventoryItemNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IDropHandler, IPointerDownHandler, IBeginDragHandler
+public class HUD_InventoryItemNode : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IDragHandler, IDropHandler
 {
-    [SerializeField] private HUD_InventoryItem _parent;
+    public HUD_InventoryItem _parent;
     public RectTransform _rectTransform;
     [SerializeField] private Image _image;
     public Vector2Int _gridPosition; // 논리적 좌표
@@ -36,13 +36,6 @@ public class HUD_InventoryItemNode : MonoBehaviour, IPointerEnterHandler, IPoint
     public void OnPointerEnter(PointerEventData eventData)
     {
         _parent.PointerEnter();
-    }
-
-    public void OnPointerDown(PointerEventData eventData)
-    {
-    }
-    public void OnBeginDrag(PointerEventData eventData)
-    {
     }
     public void OnDrag(PointerEventData eventData)
     {
