@@ -14,7 +14,7 @@ public class HUDTimer : MonoBehaviour, IHUD
     private void Awake()
     {
         ValidateComponents();
-        Initialize();
+        gameObject.SetActive(false);
     }
     
     #region IHUD Implementation
@@ -33,8 +33,17 @@ public class HUDTimer : MonoBehaviour, IHUD
     public void Initialize()
     {
         _currentTime = 0f;
-        gameObject.SetActive(false);
+        _isVisible = true;
+        gameObject.SetActive(true);
         DevLog.Log("HUDTimer: Initialized successfully");
+    }
+
+    public void Reset()
+    {
+        _currentTime = 0f;
+        _isVisible = false;
+        gameObject.SetActive(false);
+        DevLog.Log("HUDTimer: Reset successfully");
     }
     
     public void Show()
@@ -87,7 +96,7 @@ public class HUDTimer : MonoBehaviour, IHUD
     {
         if (_timerText == null) return;
         
-        float displayTime = _currentTime;
+        float displayTime = _maxTime - _currentTime;
         int minutes = Mathf.FloorToInt(displayTime / 60f);
         int seconds = Mathf.FloorToInt(displayTime % 60f);
         int milliseconds = Mathf.FloorToInt((displayTime * 100f) % 100f);

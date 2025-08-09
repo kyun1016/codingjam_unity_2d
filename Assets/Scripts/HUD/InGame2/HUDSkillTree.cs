@@ -50,6 +50,12 @@ public class HUDSkillTree : MonoBehaviour, IHUD
         // _connectorPool = new PoolManager(_connectorPrefab.gameObject);
         DevLog.Log("HUDSkillTree: Initialized successfully");
     }
+
+    public void Reset()
+    {
+        gameObject.SetActive(false);
+        DevLog.Log("HUDSkillTree: Reset successfully");
+    }
     
     public void Show()
     {

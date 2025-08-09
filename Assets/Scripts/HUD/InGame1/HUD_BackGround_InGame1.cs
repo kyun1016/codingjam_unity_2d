@@ -6,6 +6,7 @@ using UnityEngine.InputSystem;
 
 public class BackGround_InGame1 : MonoBehaviour
 {
+    public Animator anim;
 
     public void ResetPosition()
     {
@@ -15,4 +16,21 @@ public class BackGround_InGame1 : MonoBehaviour
         ResetPosition();
     }
 
+    public void TriggerLeft()
+    {
+        anim.SetTrigger("Left");
+    }
+    public void TriggerRight()
+    {
+        anim.SetTrigger("Right");
+    }
+
+    public void TriggerStart()
+    {
+        anim.SetTrigger("Start");
+    }
+    public void TriggerTimeout()
+    {
+        anim.SetTrigger("Timeout");
+    }
 }

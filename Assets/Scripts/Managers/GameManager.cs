@@ -42,6 +42,7 @@ public class GameManager : MonoBehaviour
     public float _jumpSpeed = 0.0f;
     public float _maxJumpSpeed = 30.0f;
     public float _gravity = 9.0f;
+    public float _distanceScale = 1.0f; // Scale factor for distance calculation
 
     [Header("# Game Object - HUD")]
     public GameObject _HUDGameStart;
@@ -50,6 +51,9 @@ public class GameManager : MonoBehaviour
     public HUDDistance _HUDDistance;
     public Slider _HUDDistanceSlider;
     public Slider _HUDHPSlider;
+    [Header("# Game Object - HUD")]
+    public InGame1Manager _InGame1Manager;
+    public InGame2Manager _InGame2Manager;
 
     #region HUD
     void InitHUDGameStart()
@@ -105,6 +109,8 @@ public class GameManager : MonoBehaviour
         }
 
         InitHUD();
+        _InGame1Manager.gameObject.SetActive(false);
+        _InGame2Manager.gameObject.SetActive(false);
     }
     void Awake()
     {
@@ -149,7 +155,7 @@ public class GameManager : MonoBehaviour
             return;
 
         _spd = _BackGroundTiles[0].GetComponent<BackGround_InGame2>().GetCurrentSpeed();
-        _distance += _spd * Time.deltaTime;
+        _distance += _spd * Time.deltaTime * _distanceScale;
         _hp -= Time.deltaTime * _tickDamage; // Example damage over time, can be adjusted
 
         UpdateHUDSlider();
@@ -188,7 +194,28 @@ public class GameManager : MonoBehaviour
         _HUDPause.SetActive(false);
     }
 
-    public void GameStart()
+
+    public void GameStart1()
+    {
+        _InGame1Manager.gameObject.SetActive(true);
+        _InGame1Manager.Initialize();
+        _IsLive = true;
+        Time.timeScale = 1;
+        _HUDGameStart.SetActive(false);
+        _HUDPause.SetActive(true);
+    }
+    public void GameOver1()
+    {
+        Time.timeScale = 0;
+        _IsLive = false;
+        _InGame1Manager.Reset();
+        _InGame1Manager.gameObject.SetActive(false);
+
+        _HUDGameStart.SetActive(true);
+        _HUDPause.SetActive(false);
+    }
+
+    public void GameStart2()
     {
         _hp = _maxHp;
         _distance = 0f;
@@ -207,6 +234,11 @@ public class GameManager : MonoBehaviour
         _HUDPause.SetActive(true);
         _GameTime = 0f;
     }
+    public void GameOver2()
+    {
+        _InGame1Manager.Reset();
+    }
+
     #endregion
 
     #region Input_System

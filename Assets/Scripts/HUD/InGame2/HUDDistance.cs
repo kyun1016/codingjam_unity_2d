@@ -30,8 +30,12 @@ public class HUDDistance : MonoBehaviour, IHUD
     }
     public void Initialize()
     {
+        gameObject.SetActive(true);
+    }
+    public void Reset()
+    {
         gameObject.SetActive(false);
-        DevLog.Log("HUDTimer: Initialized successfully");
+        DevLog.Log("HUDDistance: Reset successfully");
     }
     
     public void Show()

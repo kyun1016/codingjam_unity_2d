@@ -12,10 +12,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f13dc80a0313c94ea0bfceffdb55c94, type: 3}
   m_Name: GlidingEnable_Item0
   m_EditorClassIdentifier: 
+  category: 0
+  effectType: 0
   itemID: 0
-  itemName: 
-  description: 
-  icon: {fileID: 0}
+  itemName:
+  - "\uAE00\uB77C\uC774"
+  - glider
+  description:
+  - "\uAE00\uB77C\uC774"
+  - glider
+  icon:
+  - {fileID: -3755272344553227369, guid: 06ddd5857c6c36b4abb5c0381f83f684, type: 3}
+  - {fileID: -4797208226668211604, guid: 1fe8e322c27f57149aa5afc54ba881b7, type: 3}
+  - {fileID: 6279431386273385496, guid: 099ddc8f64013244e9bc2acccbccabf9, type: 3}
+  - {fileID: -6805259843887893727, guid: 2f74b019712d77d479360982b0bdf96f, type: 3}
+  effectValue: 0
+  effectDuration: 0
   gridPosition:
   - {x: 0, y: 0}
   - {x: 0, y: 1}

@@ -1,10 +1,23 @@
 public class Enum
 {
-    public enum Achive
+    public enum ItemCategory
     {
-        UnlockChar2,
-        UnlockChar3,
+        special,
+        speed,
+        health,
+        protection
     }
+    public enum ItemEffect
+    {
+        speed,
+        acceleration,
+        jump,
+        slowFalling,
+        teleport,
+        invisibility,
+        guard
+    }
+
     public enum Language
     {
         English,
@@ -12,83 +25,5 @@ public class Enum
         Japanese,
         Chinese,
         Spanish
-    }
-    public enum SFX
-    {
-        Dead,
-        Hit0,
-        Hit1,
-        LevelUp,
-        Lose,
-        Melee0,
-        Melee1,
-        Range,
-        Select,
-        Win
-    }
-    public enum PrefabType
-    {
-        Enemy,
-        MeleeBox,
-        MeleeCircle,
-        RangeBox,
-        RangeCircle,
-        DropItem,
-        FieldObject
-    }
-    public enum DebuffType
-    {
-        None,
-        TicDamage,
-        SlowCoef,
-        Size
-    }
-    public enum EffectType
-    {
-        None,
-        Stop
-    }
-    public enum DropItemSprite
-    {
-        Exp0,
-        Exp1,
-        Exp2,
-        Health,
-        Mag,
-        Gold0,
-        Gold1,
-        Gold2
-    }
-    public enum FieldObjectSprite
-    {
-        Box,
-        Candle,
-        Bush
-    }
-    public enum WeaponTag
-    {
-        Bullet,
-        Melee,
-        SpiderWeb,
-        Garlic
-    }
-
-    public enum WeaponType
-    {
-        Melee,
-        RangeBullet,
-        RangeDagger,
-        RangeAxe,
-        Garlic,
-        Web,
-        Boom,
-        ThrowBoom
-    }
-    public enum DescType
-    {
-        Melee,
-        Range,
-        Perk,
-        Heal
     }
 }

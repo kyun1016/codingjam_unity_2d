@@ -5,7 +5,8 @@ public interface IHUD
 {
     // 생명주기
     void ValidateComponents();
-    void Initialize();
+    void Initialize(); // 시작
+    void Reset(); // 종료
     void Show();
     void Hide();
     void Toggle();

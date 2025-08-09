@@ -26,12 +26,14 @@ public class HUDInventoryNode : MonoBehaviour, IHUD
     }
     public void Initialize()
     {
-        // _image.sprite = _skillData.icon;
-        // _skillName.text = _skillData.skillName;
-        // _skillDescription.text = _skillData.description;
+        gameObject.SetActive(true);
         DevLog.Log("HUDSkillTree: Initialized successfully");
     }
-    
+    public void Reset()
+    {
+        gameObject.SetActive(false);
+    }
+
     public void Show()
     {
         _isVisible = true;
