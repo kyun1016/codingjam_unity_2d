@@ -27,7 +27,7 @@ public class Player : MonoBehaviour
         GameManager.instance._hp -= 10;
         for (int i = 0; i < GameManager.instance._BackGroundTiles.Length; i++)
         {
-            GameManager.instance._BackGroundTiles[i].GetComponent<BackGround>().ResetSpeed();
+            GameManager.instance._BackGroundTiles[i].GetComponent<BackGround_InGame2>().ResetSpeed();
         }
     }
 }

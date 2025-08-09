@@ -43,7 +43,7 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance._IsLive)
             return;
-        if (GameManager.instance._distance + GameManager.instance._TileSize > _enemyData.spawnPositions[_positionIndex])
+        if (_positionIndex < _enemyData.spawnPositions.Length && GameManager.instance._distance + GameManager.instance._TileSize > _enemyData.spawnPositions[_positionIndex])
         {
             gameObject.SetActive(true);
             _positionIndex++;

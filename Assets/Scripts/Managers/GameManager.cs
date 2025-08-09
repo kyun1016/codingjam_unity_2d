@@ -148,7 +148,7 @@ public class GameManager : MonoBehaviour
         if (!_IsLive)
             return;
 
-        _spd = _BackGroundTiles[0].GetComponent<BackGround>().GetCurrentSpeed();
+        _spd = _BackGroundTiles[0].GetComponent<BackGround_InGame2>().GetCurrentSpeed();
         _distance += _spd * Time.deltaTime;
         _hp -= Time.deltaTime * _tickDamage; // Example damage over time, can be adjusted
 
@@ -198,7 +198,7 @@ public class GameManager : MonoBehaviour
         _jumpSpeed = 0.0f;
         for (int i = 0; i < _BackGroundTiles.Length; i++)
         {
-            _BackGroundTiles[i].GetComponent<BackGround>().Reset();
+            _BackGroundTiles[i].GetComponent<BackGround_InGame2>().Reset();
         }
         Time.timeScale = 1;
         Debug.Log("Game started");

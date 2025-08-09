@@ -4,7 +4,7 @@ using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
-public class BackGround : MonoBehaviour
+public class BackGround_InGame2 : MonoBehaviour
 {
     [Header("Movement")]
     [SerializeField] private MovementData _movementData;
