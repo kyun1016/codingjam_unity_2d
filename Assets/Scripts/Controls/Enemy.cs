@@ -43,9 +43,10 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance._IsLive)
             return;
-        if(GameManager.instance._distance + GameManager.instance._TileSize > _enemyData.spawnPositions[_positionIndex])
+        if (GameManager.instance._distance + GameManager.instance._TileSize > _enemyData.spawnPositions[_positionIndex])
         {
-            gameObject.SetActive(false);
+            gameObject.SetActive(true);
+            _positionIndex++;
         }
         // 속도 증가
         _speed += _movementData.acceleration * Time.fixedDeltaTime;

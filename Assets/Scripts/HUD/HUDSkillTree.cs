@@ -47,7 +47,7 @@ public class HUDSkillTree : MonoBehaviour, IHUD
 
         _skillNodePool = new GameObject("SkillNodePool").AddComponent<PoolManager>();
         _skillNodePool.transform.SetParent(transform);
-        _connectorPool = new PoolManager(_connectorPrefab.gameObject);
+        // _connectorPool = new PoolManager(_connectorPrefab.gameObject);
         DevLog.Log("HUDSkillTree: Initialized successfully");
     }
     
