@@ -2,20 +2,27 @@
 using UnityEngine.U2D;
 using UnityEngine.UI; // For SpriteAtlas
 using UnityEngine.InputSystem;
+using System.Collections.Generic;
+using Newtonsoft.Json;
+using System.IO;
+
 public class GameManager : MonoBehaviour
 {
     public static GameManager instance;
     [Header("# Control")]
     public bool _IsGamePaused = false;
     public bool _IsLive = false;
-    [Header("# Settings")]
-    public SettingData _SettingData;
     public float _GameTime;
+    [Header("# Settings")]
+    public SettingData mSettingData;
     [Header("# BGM")]
-    public AudioClip _BGMClip;
-    public AudioSource _BGMSource;
+    public AudioClip mBGMClip;
+    public AudioSource mBGMPlayer;
+    public AudioHighPassFilter mBGMFffect;
     [Header("# SFX")]
-    public AudioSource _SFXSource;
+    public AudioClip[] mSFXClip;
+    public int mMaxSFXChannel;
+    public AudioSource[] mSFXPlayer;
     [Header("# Unity Data")]
     public SpriteAtlas _SpriteAtlas;
     public Sprite[] _HUDIcons;
@@ -43,6 +50,15 @@ public class GameManager : MonoBehaviour
     public float _maxJumpSpeed = 30.0f;
     public float _gravity = 9.0f;
     public float _distanceScale = 1.0f; // Scale factor for distance calculation
+    [Header("# Skill Parameters")]
+    public List<int> _skillCount = new List<int>();
+    public List<float> _skillCooldown = new List<float>();
+    public List<bool> _skillEffect = new List<bool>();
+    public List<ItemData> _skillData = new List<ItemData>();
+    public List<int> _permanentSkillCount = new List<int>();
+    public List<float> _permanentSkillCooldown = new List<float>();
+    public List<bool> _permanentSkillEffect = new List<bool>();
+    public List<ItemData> _permanentSkillData = new List<ItemData>();
 
     [Header("# Game Object - HUD")]
     public GameObject _HUDTitle;
@@ -56,7 +72,38 @@ public class GameManager : MonoBehaviour
     public InGame2Manager _InGame2Manager;
     public HUDBuffer1Manager _HUDBuffer1Manager;
     public HUDBuffer2Manager _HUDBuffer2Manager;
+    public HUDSetting _HUDSettingManager;
 
+    private string SettingJsonPath => Path.Combine(Application.persistentDataPath, "SettingData.json");
+    private string DefaultSettingJsonPath => Path.Combine(Application.streamingAssetsPath, "SettingData.json");
+
+    void InitBGM()
+    {
+        mBGMPlayer = new GameObject("BGMPlayer").AddComponent<AudioSource>();
+        mBGMPlayer.transform.parent = GameManager.instance.transform;
+        mBGMPlayer.playOnAwake = false;
+        mBGMPlayer.loop = true;
+        mBGMPlayer.volume = mSettingData.BGMVolume * mSettingData.MasterVolume;
+        mBGMPlayer.clip = mBGMClip;
+
+        mBGMFffect = Camera.main.GetComponent<AudioHighPassFilter>();
+    }
+    void InitSFX()
+    {
+        GameObject sfxPlayer = new GameObject("SFXPlayer");
+        sfxPlayer.transform.parent = GameManager.instance.transform;
+        mSFXPlayer = new AudioSource[mMaxSFXChannel];
+            
+        for(int i=0; i<mSFXPlayer.Length; ++i)
+        {
+            mSFXPlayer[i] = sfxPlayer.AddComponent<AudioSource>();
+            mSFXPlayer[i].playOnAwake = false;
+            mSFXPlayer[i].loop = false;
+            mSFXPlayer[i].bypassListenerEffects = true;
+            mSFXPlayer[i].volume = mSettingData.SFXVolume * mSettingData.MasterVolume;
+            // mSFXPlayer[i].clip = mSFXClip[i];
+        }       
+    }
     #region HUD
     public void InitializeTitle()
     {
@@ -74,8 +121,112 @@ public class GameManager : MonoBehaviour
     }
     #endregion
 
+    private int GetCurrentResolutionIndex()
+    {
+        Resolution currentRes = Screen.currentResolution;
+        Resolution[] resolutions = Screen.resolutions;
+        
+        for (int i = 0; i < resolutions.Length; i++)
+        {
+            if (resolutions[i].width == currentRes.width && 
+                resolutions[i].height == currentRes.height)
+            {
+                return i;
+            }
+        }
+        
+        return resolutions.Length - 1; // 기본값으로 최고 해상도 반환
+    }
+
+    private void CreateDefaultSettings()
+    {
+        mSettingData = new SettingData
+        {
+            // 기본값들 설정
+            MasterVolume = 1.0f,
+            BGMVolume = 0.8f,
+            SFXVolume = 0.8f,
+            Fullscreen = Screen.fullScreen,
+            Width = Screen.currentResolution.width,
+            Height = Screen.currentResolution.height,
+            RefreshRate = ((float)Screen.currentResolution.refreshRateRatio.numerator / Screen.currentResolution.refreshRateRatio.denominator),
+            ResolutionNum = GetCurrentResolutionIndex(),
+            LanguageType = Enum.Language.English // 기본 언어
+        };
+
+        // 기본 설정을 파일로 저장
+        SaveSettingJson();
+        DevLog.Log("Default settings created and saved");
+    }
+
+    public void SaveSettingJson()
+    {
+        // try
+        // {
+        //     string json = JsonConvert.SerializeObject(mSettingData, Formatting.Indented);
+            
+        //     // ✅ persistentDataPath 사용 (빌드 후에도 쓰기 가능)
+        //     string directoryPath = Path.GetDirectoryName(SettingJsonPath);
+        //     if (!Directory.Exists(directoryPath))
+        //     {
+        //         Directory.CreateDirectory(directoryPath);
+        //     }
+            
+        //     File.WriteAllText(SettingJsonPath, json);
+        //     DevLog.Log($"Settings saved successfully to: {SettingJsonPath}");
+        // }
+        // catch (System.Exception e)
+        // {
+        //     DevLog.LogError($"Failed to save settings: {e.Message}");
+        // }
+    }
+    public void LoadSettingJson()
+    {
+        // try
+        // {
+        //     string jsonPath = SettingJsonPath;
+            
+        //     // ✅ 파일이 존재하지 않으면 기본 설정으로 생성
+        //     if (!File.Exists(jsonPath))
+        //     {
+        //         DevLog.Log("Settings file not found, creating default settings...");
+        //         CreateDefaultSettings();
+        //         return;
+        //     }
+
+        //     // ✅ 파일 읽기 및 역직렬화
+        //     string json = File.ReadAllText(jsonPath);
+            
+        //     if (string.IsNullOrEmpty(json))
+        //     {
+        //         DevLog.Log("Settings file is empty, using default settings...");
+        //         CreateDefaultSettings();
+        //         return;
+        //     }
+
+        //     mSettingData = JsonConvert.DeserializeObject<SettingData>(json);
+            
+        //     try
+        //     {
+        //         mSettingData = JsonConvert.DeserializeObject<SettingData>(json);
+        //         DevLog.Log($"Settings loaded successfully from: {jsonPath}");
+        //     }
+        //     catch (JsonException jsonEx)
+        //     {
+        //         DevLog.Log($"Failed to deserialize JSON: {jsonEx.Message}, using default settings...");
+                CreateDefaultSettings();
+        //         return;
+        //     }
+        // }
+        // catch (System.Exception e)
+        // {
+        //     DevLog.LogError($"Failed to load settings: {e.Message}");
+        //     CreateDefaultSettings();
+        // }
+    }
+
     #region CoreLogic
-    void Init()
+    public void Init()
     {
         if (instance == null)
         {
@@ -89,12 +240,16 @@ public class GameManager : MonoBehaviour
             Debug.Log("Duplicate GameManager instance destroyed");
         }
 
+        InitBGM();
+        InitSFX();
         _InGame1Manager.Reset();
         _InGame2Manager.Reset();
         _HUDBuffer1Manager.Reset();
         _HUDBuffer2Manager.Reset();
+        LoadSettingJson();
+        _HUDSettingManager.Init();
         InitializeTitle();
-        _HUDBuffer1Manager._gemini.SendChat();
+        // _HUDBuffer1Manager._gemini.SendChat();
     }
     void Awake()
     {
@@ -182,6 +337,7 @@ public class GameManager : MonoBehaviour
     }
     public void ResumeGame()
     {
+        SaveSettingJson();
         _IsGamePaused = false;
         Time.timeScale = 1;
         Debug.Log("Game resumed");
@@ -192,6 +348,22 @@ public class GameManager : MonoBehaviour
             ResumeGame();
         else
             PauseGame();
+    }
+    
+    public void SettingGame()
+    {
+        if(_IsGamePaused)
+        {
+            _IsGamePaused = false;
+            Time.timeScale = 1;
+            _HUDSettingManager.gameObject.SetActive(false);
+        }
+        else
+        {
+            _IsGamePaused = true;
+            Time.timeScale = 0;
+            _HUDSettingManager.gameObject.SetActive(true);
+        }
     }
 
     public void GameStart1()
@@ -207,7 +379,6 @@ public class GameManager : MonoBehaviour
     }
     public void GameOver1()
     {
-        _HUDBuffer1Manager._gemini.SendChat();
         Time.timeScale = 0;
         _IsLive = false;
         _InGame1Manager.Reset();
@@ -261,6 +432,19 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 0;
         _HUDBuffer2Manager.Reset();
         InitializeTitle();
+    }
+
+    public void ToTitle()
+    {
+        _IsLive = false;
+        Time.timeScale = 0;
+        if(_InGame1Manager._isActive) _InGame1Manager.Reset();
+        if(_HUDBuffer1Manager._isActive) _HUDBuffer1Manager.Reset();
+        if(_InGame2Manager._isActive) _InGame2Manager.Reset();
+        if(_HUDBuffer2Manager._isActive) _HUDBuffer2Manager.Reset();
+        _HUDSettingManager.gameObject.SetActive(false);
+        // _HUDPause.SetActive(false);
+        _HUDTitle.SetActive(true);
     }
 
     #endregion

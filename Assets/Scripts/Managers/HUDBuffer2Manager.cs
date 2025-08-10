@@ -22,11 +22,11 @@ public class HUDBuffer2Manager : MonoBehaviour
     public void Initialize()
     {
         gameObject.SetActive(true);
-        _gemini.SendChat();
         // _descriptionText.text = _descriptionTexts[Random.Range(0, _descriptionTexts.Length)];
         _aiText.text = _geminiOutput.text;
         _isActive = true;
         _currentTime = 0f;
+        // _gemini.SendChat();
     }
     public void Update()
     {
@@ -37,8 +37,8 @@ public class HUDBuffer2Manager : MonoBehaviour
 
     public void Reset()
     {
-        _gemini.SendChat();
         _isActive = false;
         gameObject.SetActive(false);
+        // _gemini.SendChat();
     }
 }

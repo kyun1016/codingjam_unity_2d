@@ -10,11 +10,13 @@ public class InGame2Manager : MonoBehaviour
     public bool _isActive = false;
     [Header("HUD")]
     public GameObject _HUD;
+    public EnemyPool _enemyPool;
     
     public void Initialize()
     {
         gameObject.SetActive(true);
         _HUD.gameObject.SetActive(true);
+        _enemyPool.gameObject.SetActive(true);
         _isActive = true;
     }
 
@@ -22,6 +24,7 @@ public class InGame2Manager : MonoBehaviour
     {
         _isActive = false;
         _HUD.gameObject.SetActive(false);
+        _enemyPool.gameObject.SetActive(false);
         gameObject.SetActive(false);
     }
 }

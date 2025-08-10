@@ -13,12 +13,6 @@ public class PoolManager : MonoBehaviour
     // 2. 스프라이트 정보
     // 3. 콜라이더 폴리곤 정보 <- 해당 데이터를 고려하면, 모든 타입에 대해 프리팹을 만들어서 등록해두자. 그리고 단순히 반복적으로 꺼내는 형식으로 가져가자.
 
-    public PoolManager(GameObject prefab)
-    {
-        _PoolPrefab = prefab;
-        Init();
-    }
-
     public void Init()
     {
         _Pool = new List<GameObject>();

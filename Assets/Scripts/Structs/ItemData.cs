@@ -5,6 +5,7 @@ public class ItemData : ScriptableObject
 {
     [Header("# Information")]
     public Enum.ItemCategory category; // 아이템 카테고리
+    public bool trigger;    // 패시브, 액티브 여부
     public Enum.ItemEffect effectType;
     public int itemID;
     public string[] itemName;

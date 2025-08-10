@@ -6,9 +6,7 @@ using UnityEngine.InputSystem;
 
 public class Enemy : MonoBehaviour
 {
-    [Header("Enemy Data")]
-    [SerializeField] private EnemyData _enemyData;
-    [SerializeField] private int _positionIndex = 0;
+    public EnemyData _enemyData;
     [Header("Movement")]
     [SerializeField] private MovementData _movementData;
     [SerializeField] private float _speed = 2f;
@@ -16,11 +14,6 @@ public class Enemy : MonoBehaviour
     [SerializeField] private Vector3 _originPosition;
 
     // 설정 된 거리가 되었을 때, 등장하는 시스템 구현
-
-    private void Start()
-    {
-        _originPosition = transform.position;
-    }
 
     public float GetCurrentSpeed()
     {
@@ -43,11 +36,6 @@ public class Enemy : MonoBehaviour
     {
         if (!GameManager.instance._IsLive)
             return;
-        if (_positionIndex < _enemyData.spawnPositions.Length && GameManager.instance._distance + GameManager.instance._TileSize > _enemyData.spawnPositions[_positionIndex])
-        {
-            gameObject.SetActive(true);
-            _positionIndex++;
-        }
         // 속도 증가
         _speed += _movementData.acceleration * Time.fixedDeltaTime;
         _speed = Mathf.Clamp(_speed, 0, _movementData.maxSpeed);
@@ -58,10 +46,5 @@ public class Enemy : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
-    }
-    void LateUpdate()
-    {
-        if (!GameManager.instance._IsLive)
-            return;
     }
 }
