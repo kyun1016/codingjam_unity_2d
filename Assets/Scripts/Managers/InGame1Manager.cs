@@ -28,13 +28,18 @@ public class InGame1Manager : MonoBehaviour
     public void Initialize()
     {
         gameObject.SetActive(true);
+        DevLog.Log("InGame1Manager: Initializing...");
         _HUDTimer.Initialize();
+        DevLog.Log("InGame1Manager: Initializing...");
         _HUDInventoryPool.Initialize();
+        DevLog.Log("InGame1Manager: Initializing...");
         _HUDBackGround.Initialize();
+        DevLog.Log("InGame1Manager: Initializing...");
         foreach (var node in _HUDInventoryNodes)
         {
             node.Initialize();
         }
+        DevLog.Log("InGame1Manager: Initializing...");
         _isActive = true;
     }
 

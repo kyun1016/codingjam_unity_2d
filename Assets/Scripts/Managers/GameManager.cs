@@ -81,7 +81,7 @@ public class GameManager : MonoBehaviour
     {
         mBGMPlayer = new GameObject("BGMPlayer").AddComponent<AudioSource>();
         mBGMPlayer.transform.parent = GameManager.instance.transform;
-        mBGMPlayer.playOnAwake = false;
+        mBGMPlayer.playOnAwake = true;
         mBGMPlayer.loop = true;
         mBGMPlayer.volume = mSettingData.BGMVolume * mSettingData.MasterVolume;
         mBGMPlayer.clip = mBGMClip;
@@ -317,6 +317,10 @@ public class GameManager : MonoBehaviour
             UpdateHUDSlider();
             if (_distance >= _maxDistance) GameOver2();
             if (_hp <= 0f) GameOver2();
+
+            _InGame2Manager._HUDDistance.UpdateDistanceDisplay();
+            _InGame2Manager._HUDDistance2.UpdateDistanceDisplay();
+            _InGame2Manager._HUDDistance3.UpdateDistanceDisplay();
         }
         if (_HUDBuffer2Manager._isActive)
         {
@@ -375,7 +379,7 @@ public class GameManager : MonoBehaviour
         Time.timeScale = 1;
         _HUDTitle.SetActive(false);
         _HUDPause.SetActive(true);
-        _HUDBuffer1Manager._gemini.SendChat();
+//         _HUDBuffer1Manager._gemini.SendChat();
     }
     public void GameOver1()
     {

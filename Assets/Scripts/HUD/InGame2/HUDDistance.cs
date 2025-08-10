@@ -6,8 +6,9 @@ using TMPro;
 public class HUDDistance : MonoBehaviour, IHUD
 {
     [Header("UI Components")]
-    [SerializeField] private TextMeshProUGUI _text;
+    public TextMeshProUGUI _text;
     public bool _isVisible = false;
+    public int _distance;
 
     private void Awake()
     {
@@ -18,18 +19,11 @@ public class HUDDistance : MonoBehaviour, IHUD
     #region IHUD Implementation
     public void ValidateComponents()
     {
-        if (_text == null)
-        {
-            _text = GetComponentInChildren<TextMeshProUGUI>();
-            if (_text == null)
-            {
-                DevLog.LogError("HUDTimer: TextMeshProUGUI component not found!");
-            }
-        }
-        DevLog.Log("HUDTimer: Components validated");
+
     }
     public void Initialize()
     {
+        _distance = 0;
         gameObject.SetActive(true);
     }
     public void Reset()
@@ -75,10 +69,10 @@ public class HUDDistance : MonoBehaviour, IHUD
         UpdateUI();
     }
     
-    private void UpdateDistanceDisplay()
+    public void UpdateDistanceDisplay()
     {
-        if (_text == null) return;
-
-        _text.text = $"{Mathf.FloorToInt(GameManager.instance._distance):0000}m";
+        _distance = (int)GameManager.instance._distance; // Assuming GameManager.instance._distance is the distance to display
+        _text.text = $"{_distance:000,000,000}";
+        // _text.text = $"{Mathf.FloorToInt(GameManager.instance._distance):0000}m";
     }
 }

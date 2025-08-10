@@ -65,6 +65,7 @@
     <Compile Include="Assets\GeminiManager\Scripts\UnityAndGeminiV3.cs" />
     <Compile Include="Assets\Scripts\HUD\InGame2\HUDSkillNode.cs" />
     <Compile Include="Assets\Scripts\Structs\SkillData.cs" />
+    <Compile Include="Assets\Scripts\HUD\InGame2\HUDDistance3.cs" />
     <Compile Include="Assets\Scripts\HUD\InGame1\HUD_InventoryPool.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_ExampleScript_01.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMPro_InstructionOverlay.cs" />
@@ -81,6 +82,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextSelector_B.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\SkewTextExample.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\WarpTextExample.cs" />
+    <Compile Include="Assets\Scripts\HUD\InGame2\HUDDistance2.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ShaderPropAnimator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_TextInfoDebugTool.cs" />
     <Compile Include="Assets\Scripts\Managers\DevLog.cs" />

@@ -84,7 +84,7 @@ public class HUD_InventoryItem : MonoBehaviour
 
         _rectTransform.anchoredPosition = new Vector2((x + 1) * 21f - 11,
                                                       y * -21f - 10);
-        
+
         DevLog.Log($"Dropped at: ({x}, {y})"); // Debug log for drop position
         bool isValidPosition = true;
         foreach (var pos in _ItemData.gridPosition)
@@ -102,7 +102,7 @@ public class HUD_InventoryItem : MonoBehaviour
             GameManager.instance._InGame1Manager._HUDInventoryPool._selectedItems.Add(this);
             foreach (var pos in _ItemData.gridPosition)
             {
-                GameManager.instance._InGame1Manager._HUDInventoryPool._enablePosition[(x + pos.x) + (y + pos.y) * 8] = true;
+                GameManager.instance._InGame1Manager._HUDInventoryPool._enablePosition[(x + pos.x) + (y + pos.y) * 8] = false;
             }
         }
         else
@@ -111,7 +111,13 @@ public class HUD_InventoryItem : MonoBehaviour
         }
 
         GameManager.instance._InGame1Manager._HUDBackGround._rootItemPools[GameManager.instance._InGame1Manager._HUDBackGround.index]._nodes[GameManager.instance._InGame1Manager._lastHandleRootItemNodeIndex].gameObject.SetActive(false);
-        StartCoroutine(DeactivateAfterDelay(0.3f));
+        // StartCoroutine(DeactivateAfterDelay(0.03f));
+        GameManager.instance._InGame1Manager._HUDInventoryPool._inventory.SetActive(false);
+        foreach (var item in GameManager.instance._InGame1Manager._HUDInventoryPool._selectedItems)
+        {
+            item.gameObject.SetActive(false);
+        }
+        gameObject.SetActive(false);
     }
 
     private IEnumerator DeactivateAfterDelay(float delay)
