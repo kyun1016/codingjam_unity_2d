@@ -45,45 +45,26 @@ public class GameManager : MonoBehaviour
     public float _distanceScale = 1.0f; // Scale factor for distance calculation
 
     [Header("# Game Object - HUD")]
-    public GameObject _HUDGameStart;
+    public GameObject _HUDTitle;
     public HUDSkillTree _HUDSkillTree;
     public GameObject _HUDPause;
     public HUDDistance _HUDDistance;
     public Slider _HUDDistanceSlider;
     public Slider _HUDHPSlider;
-    [Header("# Game Object - HUD")]
+    [Header("# Manager")]
     public InGame1Manager _InGame1Manager;
     public InGame2Manager _InGame2Manager;
+    public HUDBuffer1Manager _HUDBuffer1Manager;
+    public HUDBuffer2Manager _HUDBuffer2Manager;
 
     #region HUD
-    void InitHUDGameStart()
+    public void InitializeTitle()
     {
-        if (_HUDGameStart != null)
-        {
-            _HUDGameStart.SetActive(true);
-            Debug.Log("HUD initialized");
-        }
-        else
-        {
-            Debug.LogError("HUD GameObject is not assigned in GameManager!");
-        }
+        _HUDTitle.SetActive(true);
     }
-    void InitHUDPause()
+    public void ResetTitle()
     {
-        if (_HUDPause != null)
-        {
-            _HUDPause.SetActive(false);
-            Debug.Log("HUD Pause initialized");
-        }
-        else
-        {
-            Debug.LogError("HUD Pause GameObject is not assigned in GameManager!");
-        }
-    }
-    void InitHUD()
-    {
-        InitHUDGameStart();
-        InitHUDPause();
+        _HUDTitle.SetActive(false);
     }
 
     void UpdateHUDSlider()
@@ -108,15 +89,17 @@ public class GameManager : MonoBehaviour
             Debug.Log("Duplicate GameManager instance destroyed");
         }
 
-        InitHUD();
-        _InGame1Manager.gameObject.SetActive(false);
-        _InGame2Manager.gameObject.SetActive(false);
+        _InGame1Manager.Reset();
+        _InGame2Manager.Reset();
+        _HUDBuffer1Manager.Reset();
+        _HUDBuffer2Manager.Reset();
+        InitializeTitle();
+        _HUDBuffer1Manager._gemini.SendChat();
     }
     void Awake()
     {
         Init();
         Debug.Log("GameManager Awake called");
-
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -137,15 +120,18 @@ public class GameManager : MonoBehaviour
         if (!_IsLive || _IsGamePaused)
             return;
 
-        if (_isJumping)
+        if (_InGame2Manager._isActive)
         {
-            _jumpHeight += _jumpSpeed * Time.fixedDeltaTime;
-            _jumpSpeed -= _gravity * Time.fixedDeltaTime;
-
-            if (_jumpHeight <= 0.0f)
+            if (_isJumping)
             {
-                _jumpHeight = 0.0f;
-                _isJumping = false;
+                _jumpHeight += _jumpSpeed * Time.fixedDeltaTime;
+                _jumpSpeed -= _gravity * Time.fixedDeltaTime;
+
+                if (_jumpHeight <= 0.0f)
+                {
+                    _jumpHeight = 0.0f;
+                    _isJumping = false;
+                }
             }
         }
     }
@@ -154,14 +140,36 @@ public class GameManager : MonoBehaviour
         if (!_IsLive)
             return;
 
-        _spd = _BackGroundTiles[0].GetComponent<BackGround_InGame2>().GetCurrentSpeed();
-        _distance += _spd * Time.deltaTime * _distanceScale;
-        _hp -= Time.deltaTime * _tickDamage; // Example damage over time, can be adjusted
-
-        UpdateHUDSlider();
-
-        if (_distance >= _maxDistance) GameOver();
-        if (_hp <= 0f) GameOver();
+        if(_InGame1Manager._isActive)
+        {
+            if(_InGame1Manager._HUDTimer._currentTime > _InGame1Manager._HUDTimer._maxTime)
+            {
+                GameOver1();
+            }
+        }
+        if(_HUDBuffer1Manager._isActive)
+        {
+            if (_HUDBuffer1Manager._currentTime > _HUDBuffer1Manager._maxTime)
+            {
+                EndHUDBuffer1();
+            }
+        }
+        if (_InGame2Manager._isActive)
+        {
+            _spd = _BackGroundTiles[0].GetComponent<BackGround_InGame2>().GetCurrentSpeed();
+            _distance += _spd * Time.deltaTime * _distanceScale;
+            _hp -= Time.deltaTime * _tickDamage; // Example damage over time, can be adjusted
+            UpdateHUDSlider();
+            if (_distance >= _maxDistance) GameOver2();
+            if (_hp <= 0f) GameOver2();
+        }
+        if (_HUDBuffer2Manager._isActive)
+        {
+            if (_HUDBuffer2Manager._currentTime > _HUDBuffer2Manager._maxTime)
+            {
+                EndHUDBuffer2();
+            }
+        }
     }
     #endregion
 
@@ -185,41 +193,45 @@ public class GameManager : MonoBehaviour
         else
             PauseGame();
     }
-    public void GameOver()
-    {
-        _IsLive = false;
-        Time.timeScale = 0;
-        Debug.Log("Game stopped");
-        InitHUDGameStart();
-        _HUDPause.SetActive(false);
-    }
-
 
     public void GameStart1()
     {
+        ResetTitle();
         _InGame1Manager.gameObject.SetActive(true);
         _InGame1Manager.Initialize();
         _IsLive = true;
         Time.timeScale = 1;
-        _HUDGameStart.SetActive(false);
+        _HUDTitle.SetActive(false);
         _HUDPause.SetActive(true);
+        _HUDBuffer1Manager._gemini.SendChat();
     }
     public void GameOver1()
     {
+        _HUDBuffer1Manager._gemini.SendChat();
         Time.timeScale = 0;
         _IsLive = false;
         _InGame1Manager.Reset();
-        _InGame1Manager.gameObject.SetActive(false);
-
-        _HUDGameStart.SetActive(true);
-        _HUDPause.SetActive(false);
+        StartHUDBuffer1();
+    }
+    public void StartHUDBuffer1()
+    {
+        _IsLive = true;
+        Time.timeScale = 1;
+        _HUDBuffer1Manager.Initialize();
+    }
+    public void EndHUDBuffer1()
+    {
+        _IsLive = false;
+        Time.timeScale = 0;
+        _HUDBuffer1Manager.Reset();
+        GameStart2();
     }
 
     public void GameStart2()
     {
+        _InGame2Manager.Initialize();
         _hp = _maxHp;
         _distance = 0f;
-        _IsLive = true;
         _isJumping = false;
         _jumpHeight = 0.0f;
         _jumpSpeed = 0.0f;
@@ -227,16 +239,28 @@ public class GameManager : MonoBehaviour
         {
             _BackGroundTiles[i].GetComponent<BackGround_InGame2>().Reset();
         }
+        _IsLive = true;
         Time.timeScale = 1;
         Debug.Log("Game started");
-        _HUDGameStart.SetActive(false);
-        _HUDDistance.Show();
-        _HUDPause.SetActive(true);
         _GameTime = 0f;
     }
     public void GameOver2()
     {
-        _InGame1Manager.Reset();
+        _InGame2Manager.Reset();
+        StartHUDBuffer2();
+    }
+    public void StartHUDBuffer2()
+    {
+        _IsLive = true;
+        Time.timeScale = 1;
+        _HUDBuffer2Manager.Initialize();
+    }
+    public void EndHUDBuffer2()
+    {
+        _IsLive = false;
+        Time.timeScale = 0;
+        _HUDBuffer2Manager.Reset();
+        InitializeTitle();
     }
 
     #endregion

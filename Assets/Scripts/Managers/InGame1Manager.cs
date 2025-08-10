@@ -6,6 +6,8 @@ using UnityEngine.InputSystem;
 
 public class InGame1Manager : MonoBehaviour
 {
+    [Header("Control")]
+    public bool _isActive;
     [Header("HUD")]
     public HUDTimer _HUDTimer;
     public HUD_InventoryPool _HUDInventoryPool;
@@ -24,6 +26,7 @@ public class InGame1Manager : MonoBehaviour
     // }
     public void Initialize()
     {
+        gameObject.SetActive(true);
         _HUDTimer.Initialize();
         _HUDInventoryPool.Initialize();
         _HUDBackGround.Initialize();
@@ -31,6 +34,7 @@ public class InGame1Manager : MonoBehaviour
         {
             node.Initialize();
         }
+        _isActive = true;
     }
 
     public void Reset()
@@ -38,5 +42,7 @@ public class InGame1Manager : MonoBehaviour
         _HUDTimer.Reset();
         _HUDInventoryPool.Reset();
         _HUDBackGround.Reset();
+        _isActive = false;
+        gameObject.SetActive(false);
     }
 }

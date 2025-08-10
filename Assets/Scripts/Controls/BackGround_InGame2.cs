@@ -13,7 +13,7 @@ public class BackGround_InGame2 : MonoBehaviour
     [SerializeField] private Vector3 _originPosition;
 
 
-    private void Start()
+    private void Awake()
     {
         _originPosition = transform.position;
     }

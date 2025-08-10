@@ -26,30 +26,18 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
 
         _isDropped = false;
         currentDraggingItem = null;
-        float para1 = Random.value;
-        float para2 = Random.value;
 
-        int itemType = (int)(para1 * GameManager.instance._InGame1Manager._ItemDatas.Count);
-        if (itemType >= GameManager.instance._InGame1Manager._ItemDatas.Count)
-        {
-            itemType = GameManager.instance._InGame1Manager._ItemDatas.Count - 1;
-        }
-
-        _itemData = GameManager.instance._InGame1Manager._ItemDatas[itemType];
-        if (para2 > _itemData.dropRate)
+        SpriteState spriteState = _button.spriteState;
+        spriteState.highlightedSprite = null;
+        _isActive = false;
+        
+        _itemData = GameManager.instance._InGame1Manager._ItemDatas[Random.Range(0, GameManager.instance._InGame1Manager._ItemDatas.Count)];
+        if (Random.value > _itemData.dropRate)
         {
             _isActive = true;
-            SpriteState spriteState = _button.spriteState;
             spriteState.highlightedSprite = _itemData.image;
-            _button.spriteState = spriteState;
         }
-        else
-        {
-            _isActive = false;
-            SpriteState spriteState = _button.spriteState;
-            spriteState.highlightedSprite = null;
-            _button.spriteState = spriteState;
-        }
+        _button.spriteState = spriteState;
     }
     public void Reset()
     {

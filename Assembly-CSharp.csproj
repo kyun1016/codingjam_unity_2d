@@ -58,6 +58,7 @@
     <Compile Include="Assets\Scripts\Structs\Enum.cs" />
     <Compile Include="Assets\Scripts\Controls\Player.cs" />
     <Compile Include="Assets\Scripts\Structs\MovementData.cs" />
+    <Compile Include="Assets\Scripts\Managers\HUDBuffer1Manager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark02.cs" />
     <Compile Include="Assets\Scripts\HUD\Common\IHUD.cs" />
     <Compile Include="Assets\Scripts\Managers\GameManager.cs" />
@@ -90,6 +91,7 @@
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\Benchmark04.cs" />
     <Compile Include="Assets\Scripts\Structs\JsonTextData.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\ChatController.cs" />
+    <Compile Include="Assets\Scripts\Managers\HUDBuffer2Manager.cs" />
     <Compile Include="Assets\Scripts\Managers\InGame1Manager.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_DigitValidator.cs" />
     <Compile Include="Assets\TextMesh Pro\Examples &amp; Extras\Scripts\TMP_FrameRateCounter.cs" />

@@ -6,16 +6,22 @@ using UnityEngine.InputSystem;
 
 public class InGame2Manager : MonoBehaviour
 {
+    [Header("Parameter")]
+    public bool _isActive = false;
     [Header("HUD")]
-    [SerializeField] private HUDTimer _HUDTimer;
+    public GameObject _HUD;
     
     public void Initialize()
     {
-        _HUDTimer.Initialize();
+        gameObject.SetActive(true);
+        _HUD.gameObject.SetActive(true);
+        _isActive = true;
     }
 
     public void Reset()
     {
-        _HUDTimer.Reset();
+        _isActive = false;
+        _HUD.gameObject.SetActive(false);
+        gameObject.SetActive(false);
     }
 }
