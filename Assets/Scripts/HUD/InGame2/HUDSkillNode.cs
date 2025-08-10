@@ -6,12 +6,14 @@ using TMPro;
 public class HUDSkillNode : MonoBehaviour, IHUD
 {
     [Header("UI Components")]
-    [SerializeField] private SkillData _skillData;
+    public SkillData _skillData;
     public bool _isVisible = false;
     [Header("Skill Node Settings")]
-    [SerializeField] private Image _image;
-    [SerializeField] private TextMeshProUGUI _skillName;
-    [SerializeField] private TextMeshProUGUI _skillDescription;
+    public Image _image;
+    public TextMeshProUGUI _skillName;
+    public TextMeshProUGUI _skillDescription;
+    public TextMeshProUGUI _skillCount;
+    public int _count;
 
     private void Awake()
     {
@@ -22,27 +24,10 @@ public class HUDSkillNode : MonoBehaviour, IHUD
     #region IHUD Implementation
     public void ValidateComponents()
     {
-        if (_skillData == null)
-        {
-            _skillData = GetComponentInChildren<SkillData>();
-            if (_skillData == null)
-            {
-                DevLog.LogError("HUDSkillTree: SkillData component not found!");
-            }
-        }
-        if (_skillName == null)
-        {
-            DevLog.LogError("HUDSkillNode: TextMeshProUGUI component for skill name not found!");
-        }
-        if (_skillDescription == null)
-        {
-            DevLog.LogError("HUDSkillNode: TextMeshProUGUI component for skill description not found!");
-        }
-        DevLog.Log("HUDSkillTree: Components validated");
     }
     public void Initialize()
     {
-        _image.sprite = _skillData.icon;
+        _image.color = new Color(0.0f, 0.0f, 0.0f, 0.0f);
         gameObject.SetActive(true);
         DevLog.Log("HUDSkillTree: Initialized successfully");
     }
@@ -71,8 +56,13 @@ public class HUDSkillNode : MonoBehaviour, IHUD
         else
             Show();
     }
+
+    public void SetSkillData()
+    {
+        
+    }
     
-    public void UpdateUI(){}
+    public void UpdateUI() { }
     public void LateUpdateUI(){}
 
     #endregion

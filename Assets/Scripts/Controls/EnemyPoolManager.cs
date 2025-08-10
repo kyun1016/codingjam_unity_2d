@@ -6,47 +6,21 @@ using UnityEngine.InputSystem;
 
 public class EnemyPoolManager : MonoBehaviour
 {
-    public Enemy _PoolPrefab;
-    public List<Enemy> _Pool = new List<Enemy>();
-    public int _positionIndex = 0;
-    public void Init()
-    {
-        _Pool.Add(_PoolPrefab);
-        _Pool[0].gameObject.SetActive(false);
-    }
+    public List<EnemyPool> _enemyPools;
 
-    public Enemy Get()
+    public void Initialize()
     {
-        Enemy select = null;
-
-        foreach (Enemy item in _Pool)
+        foreach (var pool in _enemyPools)
         {
-            if (!item.gameObject.activeSelf)
-            {
-                select = item;
-                select.gameObject.SetActive(true);
-                return select;
-            }
+            pool.Initialize();
         }
-
-        // ... 못찾은 경우, 풀 등록
-        select = Instantiate(_Pool[0], transform);
-        select.name = _Pool[0].name;
-        select.gameObject.SetActive(true);
-        _Pool.Add(select);
-
-        return select;
     }
-
-    void LateUpdate()
+    public void Reset()
     {
-        if (!GameManager.instance._IsLive)
-            return;
-        if (_positionIndex >= _PoolPrefab._enemyData.spawnPositions.Length || GameManager.instance._distance < _PoolPrefab._enemyData.spawnPositions[_positionIndex])
-            return;
-        _positionIndex++;
-        Enemy enemy = Get();
-        enemy.gameObject.SetActive(false);
-        enemy.Reset();
+        foreach (var pool in _enemyPools)
+        {
+            pool.Reset();
+        }
+        gameObject.SetActive(false);
     }
 }

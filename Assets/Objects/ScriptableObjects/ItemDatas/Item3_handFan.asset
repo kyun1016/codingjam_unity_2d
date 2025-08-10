@@ -12,7 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f13dc80a0313c94ea0bfceffdb55c94, type: 3}
   m_Name: Item3_handFan
   m_EditorClassIdentifier: 
-  category: 0
+  category: 2
+  trigger: 1
   effectType: 0
   itemID: 3
   itemName: []

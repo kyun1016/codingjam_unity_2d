@@ -64,6 +64,26 @@ public class HUD_InventoryItem : MonoBehaviour
         _rectTransform.anchoredPosition += delta / _canvas.scaleFactor;
     }
 
+    public void PushDataToSelectedItems()
+    {
+        GameManager.instance._InGame1Manager._HUDInventoryPool._selectedItems.Add(this);
+        if (GameManager.instance._InGame1Manager._selectedItemDatas.ContainsKey(_ItemData.itemID))
+        {
+            GameManager.instance._InGame1Manager._selectedItemDatas[_ItemData.itemID]++;
+            int index = GameManager.instance._InGame1Manager._selectedItemIDs.IndexOf(_ItemData.itemID);
+
+            GameManager.instance._InGame1Manager._HUDItemNodes[index].SetCount(GameManager.instance._InGame1Manager._selectedItemDatas[_ItemData.itemID]);
+        }
+        else
+        {
+            GameManager.instance._InGame1Manager._selectedItemDatas.Add(_ItemData.itemID, 1);
+            GameManager.instance._InGame1Manager._HUDItemNodes[GameManager.instance._InGame1Manager._selectedItemIDs.Count].SetItemData(_ItemData);
+            GameManager.instance._InGame1Manager._selectedItemIDs.Add(_ItemData.itemID);
+        }
+        
+        
+    }
+
     public void Drop()
     {
         if (_isDropped)
@@ -77,12 +97,16 @@ public class HUD_InventoryItem : MonoBehaviour
         _rectTransform.anchoredPosition = new Vector2((x + 1) * 21f - 11,
                                                       y * -21f - 10);
 
-        DevLog.Log($"Dropped at: ({x}, {y})"); // Debug log for drop position
         bool isValidPosition = true;
         foreach (var pos in _ItemData.gridPosition)
         {
-            if (x < 0 || x > 8 || y < 0 || y > 4
-            || !GameManager.instance._InGame1Manager._HUDInventoryPool._enablePosition[(x + pos.x) + (y + pos.y) * 8])
+            DevLog.Log($"Dropped at: ({x - pos.x}, {y + pos.y})"); // Debug log for drop position
+            if (x - pos.x < 0 || x - pos.x >= 8 || y + pos.y < 0 || y + pos.y >= 4)
+            {
+                isValidPosition = false;
+                break;
+            }
+            else if (!GameManager.instance._InGame1Manager._HUDInventoryPool._enablePosition[(x - pos.x) + (y + pos.y) * 8])
             {
                 isValidPosition = false;
                 break;
@@ -91,10 +115,11 @@ public class HUD_InventoryItem : MonoBehaviour
 
         if (isValidPosition)
         {
-            GameManager.instance._InGame1Manager._HUDInventoryPool._selectedItems.Add(this);
+            PushDataToSelectedItems();
+            
             foreach (var pos in _ItemData.gridPosition)
             {
-                GameManager.instance._InGame1Manager._HUDInventoryPool._enablePosition[(x + pos.x) + (y + pos.y) * 8] = false;
+                GameManager.instance._InGame1Manager._HUDInventoryPool._enablePosition[(x - pos.x) + (y + pos.y) * 8] = false;
             }
         }
         else
@@ -122,9 +147,5 @@ public class HUD_InventoryItem : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
-
-    private OnInventory(InputSystem inputSystem)
-    {
-
-    }
+    
 }

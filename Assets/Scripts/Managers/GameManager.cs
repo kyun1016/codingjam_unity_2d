@@ -35,7 +35,6 @@ public class GameManager : MonoBehaviour
     public PlayerInput _input;
     [Header("# Game Object")]
     public GameObject _Player;
-    public GameObject[] _BackGroundTiles;
     public GameObject[] _PoolPrefabs;
     [Header("# Parameters")]
     public float _hp = 100f;
@@ -312,7 +311,7 @@ public class GameManager : MonoBehaviour
         }
         if (_InGame2Manager._isActive)
         {
-            _spd = _BackGroundTiles[0].GetComponent<BackGround_InGame2>().GetCurrentSpeed();
+            _spd = _InGame2Manager._BackGroundTiles[0]._speed;
             _distance += _spd * Time.deltaTime * _distanceScale;
             _hp -= Time.deltaTime * _tickDamage; // Example damage over time, can be adjusted
             UpdateHUDSlider();
@@ -410,10 +409,6 @@ public class GameManager : MonoBehaviour
         _isJumping = false;
         _jumpHeight = 0.0f;
         _jumpSpeed = 0.0f;
-        for (int i = 0; i < _BackGroundTiles.Length; i++)
-        {
-            _BackGroundTiles[i].GetComponent<BackGround_InGame2>().Reset();
-        }
         _IsLive = true;
         Time.timeScale = 1;
         Debug.Log("Game started");
@@ -469,6 +464,16 @@ public class GameManager : MonoBehaviour
     void OnInventory(InputValue value)
     {
         SettingGame();
+    }
+    public void QuitGame()
+    {
+        // 빌드된 게임에서만 작동합니다.
+        Application.Quit();
+
+        // 유니티 에디터에서 테스트할 때 아래 코드를 활성화하세요.
+        #if UNITY_EDITOR
+            UnityEditor.EditorApplication.isPlaying = false;
+        #endif
     }
     #endregion
 }

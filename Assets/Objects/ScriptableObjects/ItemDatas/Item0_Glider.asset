@@ -12,8 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 1f13dc80a0313c94ea0bfceffdb55c94, type: 3}
   m_Name: Item0_Glider
   m_EditorClassIdentifier: 
-  category: 0
-  effectType: 0
+  category: 1
+  trigger: 1
+  effectType: 2
   itemID: 0
   itemName:
   - "\uAE00\uB77C\uC774"

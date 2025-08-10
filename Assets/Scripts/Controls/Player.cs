@@ -17,17 +17,24 @@ public class Player : MonoBehaviour
 
     private void OnTriggerEnter2D(Collider2D collider)
     {
-        DevLog.Log("Player collided with: " + collider.gameObject.name);
         if (!GameManager.instance._IsLive)
             return;
 
         if (!collider.gameObject.CompareTag("Enemy"))
             return;
+        Enemy enemy = collider.gameObject.GetComponent<Enemy>();
 
-        GameManager.instance._hp -= 10;
-        for (int i = 0; i < GameManager.instance._BackGroundTiles.Length; i++)
+        GameManager.instance._hp -= enemy._enemyData.Damage;
+        foreach (var item in GameManager.instance._InGame2Manager._BackGroundTiles)
         {
-            GameManager.instance._BackGroundTiles[i].GetComponent<BackGround_InGame2>().ResetSpeed();
+            item.ResetSpeed();
         }
+        // foreach (var enemyPool in GameManager.instance._InGame2Manager._enemyPoolManager)
+        // {
+        //     foreach (var item in enemyPool._Pool)
+        //     {
+        //         item.ResetSpeed();
+        //     }
+        // }
     }
 }

@@ -36,20 +36,18 @@ public class HUDDistance3 : MonoBehaviour, IHUD
     
     public void Show()
     {
-        _isVisible = true;
         gameObject.SetActive(true);
         UpdateDistanceDisplay();
     }
     
     public void Hide()
     {
-        _isVisible = false;
         gameObject.SetActive(false);
     }
     
     public void Toggle()
     {
-        if (_isVisible)
+        if (gameObject.activeSelf)
             Hide();
         else
             Show();
@@ -66,8 +64,6 @@ public class HUDDistance3 : MonoBehaviour, IHUD
 
     public void Update()
     {
-        if (!_isVisible)
-            return;
         UpdateUI();
     }
 

@@ -7,12 +7,18 @@ using UnityEngine.InputSystem;
 public class BackGround_InGame2 : MonoBehaviour
 {
     [Header("Movement")]
-    [SerializeField] private MovementData _movementData;
-    [SerializeField] private float _speed = 2f;
+    public MovementData _movementData;
+    public float _speed = 2f;
+    public float _jump = 0f;
     [Header("Jump Effect")]
-    [SerializeField] private Vector3 _originPosition;
+    public Vector3 _originPosition;
 
-
+    public void Initialization()
+    {
+        gameObject.SetActive(true);
+        _speed = _movementData.baseSpeed;
+        _originPosition = transform.position;
+    }
     private void Awake()
     {
         _originPosition = transform.position;

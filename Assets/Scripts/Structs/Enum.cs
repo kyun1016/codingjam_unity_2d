@@ -1,5 +1,11 @@
 public class Enum
 {
+    public enum MovementType
+    {
+        Close,
+        Mid,
+        Long
+    }
     public enum ItemCategory
     {
         special,

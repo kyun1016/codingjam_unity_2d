@@ -2,6 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.EventSystems; // 이벤트 시스템 사용을 위해 필수!
 using UnityEngine.UI;           // CanvasGroup을 사용하기 위해 필요
+using UnityEngine.InputSystem;
 
 public class HUD_InventoryPool : MonoBehaviour
 {
@@ -13,7 +14,7 @@ public class HUD_InventoryPool : MonoBehaviour
     public List<HUD_InventoryItem> _selectedItems;
 
     void Awake()
-    {   
+    {
         _itemPools = new List<SimpleObjectPool<HUD_InventoryItem>>();
         _items = new List<HUD_InventoryItem>();
         DevLog.Log($"Item Data Count: {GameManager.instance._InGame1Manager._ItemDatas.Count}"); // Debug log for item data count
@@ -63,5 +64,20 @@ public class HUD_InventoryPool : MonoBehaviour
     public void ReleaseItem(int index, HUD_InventoryItem item)
     {
         _itemPools[index].Release(item);
+    }
+    
+    
+     void OnInventory(InputValue value)
+    {
+        if (_inventory.activeSelf)
+        {
+            _inventory.SetActive(false);
+            return;
+        }
+        else
+        {
+            _inventory.SetActive(true);
+            
+        }
     }
 }
