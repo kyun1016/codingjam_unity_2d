@@ -21,9 +21,9 @@ MonoBehaviour:
   effectDuration: 0
   gridPosition:
   - {x: 0, y: 0}
-  - {x: 0, y: 1}
+  - {x: 1, y: 0}
   icon:
-  - {fileID: -7522830878710359926, guid: 8a862676ef1389f4fbc17ac44b165902, type: 3}
-  - {fileID: 106111527060056245, guid: f8e114116f3755e4fbb44132ee2db7bf, type: 3}
+  - {fileID: 383862056, guid: e8f45f40f781d0147a07dbac8d255890, type: 3}
+  - {fileID: -5837345370082030104, guid: e8f45f40f781d0147a07dbac8d255890, type: 3}
   dropRate: 0.3
-  image: {fileID: -5837345370082030104, guid: 72fb20d6fa7d8894d8561f8e7eed1f59, type: 3}
+  image: {fileID: -5837345370082030104, guid: 6addcdb38e200fc47ac0bc42e3f69c48, type: 3}

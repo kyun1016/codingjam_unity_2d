@@ -23,7 +23,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   - {x: 0, y: 1}
   icon:
-  - {fileID: -7522830878710359926, guid: 8a862676ef1389f4fbc17ac44b165902, type: 3}
-  - {fileID: 106111527060056245, guid: f8e114116f3755e4fbb44132ee2db7bf, type: 3}
+  - {fileID: 7277387044138751794, guid: c4b84b828c6aab247afa2750e749e8f0, type: 3}
+  - {fileID: -488469660, guid: c4b84b828c6aab247afa2750e749e8f0, type: 3}
   dropRate: 0.3
-  image: {fileID: 7277387044138751794, guid: bedf3a6fddc8dac4ea88b46483b173a3, type: 3}
+  image: {fileID: 7277387044138751794, guid: 08e08fcc81fa5544081cf45eccc218e7, type: 3}

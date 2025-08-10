@@ -25,13 +25,17 @@ MonoBehaviour:
   effectDuration: 0
   gridPosition:
   - {x: 0, y: 0}
-  - {x: 0, y: 1}
   - {x: 1, y: 0}
+  - {x: 0, y: 1}
   - {x: 1, y: 1}
+  - {x: 0, y: 2}
+  - {x: 1, y: 2}
   icon:
-  - {fileID: -3755272344553227369, guid: 06ddd5857c6c36b4abb5c0381f83f684, type: 3}
-  - {fileID: -4797208226668211604, guid: 1fe8e322c27f57149aa5afc54ba881b7, type: 3}
-  - {fileID: 6279431386273385496, guid: 099ddc8f64013244e9bc2acccbccabf9, type: 3}
-  - {fileID: -6805259843887893727, guid: 2f74b019712d77d479360982b0bdf96f, type: 3}
-  dropRate: 0.6
-  image: {fileID: 6284233109734092633, guid: c618216581489734190a06e7163d69e2, type: 3}
+  - {fileID: 735982256, guid: 0094a0cb0eb0f714f8e8dd7cc997c6d5, type: 3}
+  - {fileID: 6284233109734092633, guid: 0094a0cb0eb0f714f8e8dd7cc997c6d5, type: 3}
+  - {fileID: 1526874993, guid: 0094a0cb0eb0f714f8e8dd7cc997c6d5, type: 3}
+  - {fileID: 130136271, guid: 0094a0cb0eb0f714f8e8dd7cc997c6d5, type: 3}
+  - {fileID: -236191054, guid: 0094a0cb0eb0f714f8e8dd7cc997c6d5, type: 3}
+  - {fileID: -965073515, guid: 0094a0cb0eb0f714f8e8dd7cc997c6d5, type: 3}
+  dropRate: 0.5
+  image: {fileID: 6284233109734092633, guid: 2f398a8b9fca2764b8c0d8255809f775, type: 3}
