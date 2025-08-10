@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c855f3eab6c50734e8ceef7d48af8a3d, type: 3}
   m_Name: CloseRangeMovement
   m_EditorClassIdentifier: 
-  acceleration: 5
+  acceleration: 50
   baseSpeed: 2
-  maxSpeed: 50
+  maxSpeed: 500
   jumpEffect: 0.8
   dashEffect: 1

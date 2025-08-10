@@ -13,16 +13,19 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
     private HUD_InventoryItem currentDraggingItem;
     public bool _isDropped;
     public int _index;
+    public Image _image;
 
     void Awake()
     {
         _index = transform.GetSiblingIndex();
         _button = GetComponent<Button>();
+        _image = GetComponent<Image>();
     }
 
     public void Initialize()
     {
         gameObject.SetActive(true);
+        _image.color = new Color(0.0f, 0.0f, 0.0f, 0.0f); // 투명하게 설정
 
         _isDropped = false;
         currentDraggingItem = null;
@@ -34,6 +37,8 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
         _itemData = GameManager.instance._InGame1Manager._ItemDatas[Random.Range(0, GameManager.instance._InGame1Manager._ItemDatas.Count)];
         if (Random.value > _itemData.dropRate)
         {
+            _image.color = Color.white;
+            _image.sprite = _itemData.image;
             _isActive = true;
             spriteState.highlightedSprite = _itemData.image;
         }
@@ -54,6 +59,7 @@ public class HUD_RootItemNode : MonoBehaviour, IPointerDownHandler, IDragHandler
         if (_isActive)
         {
             _isDropped = true;
+            _image.color = new Color(0.0f, 0.0f, 0.0f, 0.0f); // 투명하게 설정
             HUD_InventoryItem item = GameManager.instance._InGame1Manager._HUDInventoryPool.GetItem(_itemData.itemID);
             GameManager.instance._InGame1Manager._lastHandleRootItemNodeIndex = _index;
             currentDraggingItem = item;

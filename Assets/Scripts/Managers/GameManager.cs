@@ -85,6 +85,7 @@ public class GameManager : MonoBehaviour
         mBGMPlayer.loop = true;
         mBGMPlayer.volume = mSettingData.BGMVolume * mSettingData.MasterVolume;
         mBGMPlayer.clip = mBGMClip;
+        mBGMPlayer.Play();
 
         mBGMFffect = Camera.main.GetComponent<AudioHighPassFilter>();
     }
@@ -93,8 +94,8 @@ public class GameManager : MonoBehaviour
         GameObject sfxPlayer = new GameObject("SFXPlayer");
         sfxPlayer.transform.parent = GameManager.instance.transform;
         mSFXPlayer = new AudioSource[mMaxSFXChannel];
-            
-        for(int i=0; i<mSFXPlayer.Length; ++i)
+
+        for (int i = 0; i < mSFXPlayer.Length; ++i)
         {
             mSFXPlayer[i] = sfxPlayer.AddComponent<AudioSource>();
             mSFXPlayer[i].playOnAwake = false;
@@ -102,7 +103,7 @@ public class GameManager : MonoBehaviour
             mSFXPlayer[i].bypassListenerEffects = true;
             mSFXPlayer[i].volume = mSettingData.SFXVolume * mSettingData.MasterVolume;
             // mSFXPlayer[i].clip = mSFXClip[i];
-        }       
+        }
     }
     #region HUD
     public void InitializeTitle()
@@ -125,16 +126,16 @@ public class GameManager : MonoBehaviour
     {
         Resolution currentRes = Screen.currentResolution;
         Resolution[] resolutions = Screen.resolutions;
-        
+
         for (int i = 0; i < resolutions.Length; i++)
         {
-            if (resolutions[i].width == currentRes.width && 
+            if (resolutions[i].width == currentRes.width &&
                 resolutions[i].height == currentRes.height)
             {
                 return i;
             }
         }
-        
+
         return resolutions.Length - 1; // 기본값으로 최고 해상도 반환
     }
 
@@ -164,14 +165,14 @@ public class GameManager : MonoBehaviour
         // try
         // {
         //     string json = JsonConvert.SerializeObject(mSettingData, Formatting.Indented);
-            
+
         //     // ✅ persistentDataPath 사용 (빌드 후에도 쓰기 가능)
         //     string directoryPath = Path.GetDirectoryName(SettingJsonPath);
         //     if (!Directory.Exists(directoryPath))
         //     {
         //         Directory.CreateDirectory(directoryPath);
         //     }
-            
+
         //     File.WriteAllText(SettingJsonPath, json);
         //     DevLog.Log($"Settings saved successfully to: {SettingJsonPath}");
         // }
@@ -185,7 +186,7 @@ public class GameManager : MonoBehaviour
         // try
         // {
         //     string jsonPath = SettingJsonPath;
-            
+
         //     // ✅ 파일이 존재하지 않으면 기본 설정으로 생성
         //     if (!File.Exists(jsonPath))
         //     {
@@ -196,7 +197,7 @@ public class GameManager : MonoBehaviour
 
         //     // ✅ 파일 읽기 및 역직렬화
         //     string json = File.ReadAllText(jsonPath);
-            
+
         //     if (string.IsNullOrEmpty(json))
         //     {
         //         DevLog.Log("Settings file is empty, using default settings...");
@@ -205,7 +206,7 @@ public class GameManager : MonoBehaviour
         //     }
 
         //     mSettingData = JsonConvert.DeserializeObject<SettingData>(json);
-            
+
         //     try
         //     {
         //         mSettingData = JsonConvert.DeserializeObject<SettingData>(json);
@@ -214,7 +215,7 @@ public class GameManager : MonoBehaviour
         //     catch (JsonException jsonEx)
         //     {
         //         DevLog.Log($"Failed to deserialize JSON: {jsonEx.Message}, using default settings...");
-                CreateDefaultSettings();
+        CreateDefaultSettings();
         //         return;
         //     }
         // }
@@ -295,14 +296,14 @@ public class GameManager : MonoBehaviour
         if (!_IsLive)
             return;
 
-        if(_InGame1Manager._isActive)
+        if (_InGame1Manager._isActive)
         {
-            if(_InGame1Manager._HUDTimer._currentTime > _InGame1Manager._HUDTimer._maxTime)
+            if (_InGame1Manager._HUDTimer._currentTime > _InGame1Manager._HUDTimer._maxTime)
             {
                 GameOver1();
             }
         }
-        if(_HUDBuffer1Manager._isActive)
+        if (_HUDBuffer1Manager._isActive)
         {
             if (_HUDBuffer1Manager._currentTime > _HUDBuffer1Manager._maxTime)
             {
@@ -353,10 +354,10 @@ public class GameManager : MonoBehaviour
         else
             PauseGame();
     }
-    
+
     public void SettingGame()
     {
-        if(_IsGamePaused)
+        if (_IsGamePaused)
         {
             _IsGamePaused = false;
             Time.timeScale = 1;
@@ -373,13 +374,12 @@ public class GameManager : MonoBehaviour
     public void GameStart1()
     {
         ResetTitle();
-        _InGame1Manager.gameObject.SetActive(true);
         _InGame1Manager.Initialize();
         _IsLive = true;
         Time.timeScale = 1;
         _HUDTitle.SetActive(false);
         _HUDPause.SetActive(true);
-//         _HUDBuffer1Manager._gemini.SendChat();
+        //         _HUDBuffer1Manager._gemini.SendChat();
     }
     public void GameOver1()
     {
@@ -442,10 +442,10 @@ public class GameManager : MonoBehaviour
     {
         _IsLive = false;
         Time.timeScale = 0;
-        if(_InGame1Manager._isActive) _InGame1Manager.Reset();
-        if(_HUDBuffer1Manager._isActive) _HUDBuffer1Manager.Reset();
-        if(_InGame2Manager._isActive) _InGame2Manager.Reset();
-        if(_HUDBuffer2Manager._isActive) _HUDBuffer2Manager.Reset();
+        if (_InGame1Manager._isActive) _InGame1Manager.Reset();
+        if (_HUDBuffer1Manager._isActive) _HUDBuffer1Manager.Reset();
+        if (_InGame2Manager._isActive) _InGame2Manager.Reset();
+        if (_HUDBuffer2Manager._isActive) _HUDBuffer2Manager.Reset();
         _HUDSettingManager.gameObject.SetActive(false);
         // _HUDPause.SetActive(false);
         _HUDTitle.SetActive(true);
@@ -464,6 +464,11 @@ public class GameManager : MonoBehaviour
         _jumpSpeed = _maxJumpSpeed;
 
         DevLog.Log($"Jump input received {_jumpSpeed}");
+    }
+
+    void OnInventory(InputValue value)
+    {
+        SettingGame();
     }
     #endregion
 }

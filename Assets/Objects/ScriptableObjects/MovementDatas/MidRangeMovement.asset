@@ -12,8 +12,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c855f3eab6c50734e8ceef7d48af8a3d, type: 3}
   m_Name: MidRangeMovement
   m_EditorClassIdentifier: 
-  acceleration: 2
+  acceleration: 30
   baseSpeed: 2
-  maxSpeed: 5
+  maxSpeed: 400
   jumpEffect: 0.2
   dashEffect: 1

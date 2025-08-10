@@ -38,14 +38,6 @@ public class HUD_InventoryItem : MonoBehaviour
         }
         gameObject.SetActive(false);
     }
-
-    public Vector2Int FindPosition()
-    {
-        Vector2Int gridPosition = new Vector2Int(Mathf.FloorToInt((_rectTransform.anchoredPosition.x + 10) / -21f),
-                                         Mathf.FloorToInt((_rectTransform.anchoredPosition.y + 10) / -21f));
-        DevLog.Log($"Node Position: {gridPosition}"); // Debug log for position
-        return gridPosition;
-    }
     public void PointerEnter()
     {
         if (_isDropped)
@@ -111,7 +103,7 @@ public class HUD_InventoryItem : MonoBehaviour
         }
 
         GameManager.instance._InGame1Manager._HUDBackGround._rootItemPools[GameManager.instance._InGame1Manager._HUDBackGround.index]._nodes[GameManager.instance._InGame1Manager._lastHandleRootItemNodeIndex].gameObject.SetActive(false);
-        // StartCoroutine(DeactivateAfterDelay(0.03f));
+        // StartCoroutine(DeactivateAfterDelay(0.03f)); // 혹시 모를 버그 발생을 막기 위해 즉시 인벤토리 종료
         GameManager.instance._InGame1Manager._HUDInventoryPool._inventory.SetActive(false);
         foreach (var item in GameManager.instance._InGame1Manager._HUDInventoryPool._selectedItems)
         {
@@ -129,5 +121,10 @@ public class HUD_InventoryItem : MonoBehaviour
             item.gameObject.SetActive(false);
         }
         gameObject.SetActive(false);
+    }
+
+    private OnInventory(InputSystem inputSystem)
+    {
+
     }
 }

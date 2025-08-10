@@ -9,16 +9,18 @@ public class HUDBuffer2Manager : MonoBehaviour
 {
     [Header("Control")]
     public bool _isActive = false;
-    public float _maxTime = 4f;
+    public float _maxTime = 50f;
     public float _currentTime = 0f;
-    public Image _image;
+    public TextMeshProUGUI _descriptionText;
+    [TextArea]
+    public string[] _descriptionTexts;
 
     public void Initialize()
     {
         gameObject.SetActive(true);
+        _descriptionText.text = _descriptionTexts[Random.Range(0, _descriptionTexts.Length)];
         _isActive = true;
         _currentTime = 0f;
-        // _gemini.SendChat();
     }
     public void Update()
     {

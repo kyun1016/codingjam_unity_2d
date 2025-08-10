@@ -136,3 +136,6 @@ MonoBehaviour:
   _itemData: {fileID: 0}
   _button: {fileID: 0}
   _isActive: 0
+  _isDropped: 0
+  _index: 0
+  _image: {fileID: 7526941771266366946}
