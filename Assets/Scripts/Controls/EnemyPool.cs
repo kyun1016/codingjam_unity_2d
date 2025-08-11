@@ -12,6 +12,7 @@ public class EnemyPool : MonoBehaviour
     public void Initialize()
     {
         gameObject.SetActive(true);
+        _positionIndex = 0;
         _Pool.Add(_PoolPrefab);
         _Pool[0].gameObject.SetActive(false);
     }
