@@ -99,3 +99,4 @@ InitTestScene*.unity*
 # ================================
 # Add any project-specific files to ignore here
 ignore.conf
+.plastic/

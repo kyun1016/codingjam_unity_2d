@@ -13,12 +13,6 @@ public class PoolManager : MonoBehaviour
     // 2. 스프라이트 정보
     // 3. 콜라이더 폴리곤 정보 <- 해당 데이터를 고려하면, 모든 타입에 대해 프리팹을 만들어서 등록해두자. 그리고 단순히 반복적으로 꺼내는 형식으로 가져가자.
 
-    public PoolManager(GameObject prefab)
-    {
-        _PoolPrefab = prefab;
-        Init();
-    }
-
     public void Init()
     {
         _Pool = new List<GameObject>();
@@ -53,42 +47,42 @@ public class PoolManager : MonoBehaviour
 }
 
 
-// public class SimpleObjectPool<T> where T : MonoBehaviour
-// {
-//     private T _prefab;
-//     private Transform _parent;
-//     private Queue<T> _pool = new Queue<T>();
+public class SimpleObjectPool<T> where T : MonoBehaviour
+{
+    private T _prefab;
+    private Transform _parent;
+    private Queue<T> _pool = new Queue<T>();
 
-//     public SimpleObjectPool(T prefab, Transform parent, int initialSize)
-//     {
-//         _prefab = prefab;
-//         _parent = parent;
-//         for (int i = 0; i < initialSize; i++)
-//         {
-//             T newObj = GameObject.Instantiate(_prefab, _parent);
-//             newObj.gameObject.SetActive(false);
-//             _pool.Enqueue(newObj);
-//         }
-//     }
+    public SimpleObjectPool(T prefab, Transform parent, int initialSize)
+    {
+        _prefab = prefab;
+        _parent = parent;
+        for (int i = 0; i < initialSize; i++)
+        {
+            T newObj = GameObject.Instantiate(_prefab, _parent);
+            newObj.gameObject.SetActive(false);
+            _pool.Enqueue(newObj);
+        }
+    }
 
-//     public T Get()
-//     {
-//         if (_pool.Count > 0)
-//         {
-//             T obj = _pool.Dequeue();
-//             obj.gameObject.SetActive(true);
-//             return obj;
-//         }
-//         else
-//         {
-//             T newObj = GameObject.Instantiate(_prefab, _parent);
-//             return newObj;
-//         }
-//     }
+    public T Get()
+    {
+        if (_pool.Count > 0)
+        {
+            T obj = _pool.Dequeue();
+            obj.gameObject.SetActive(true);
+            return obj;
+        }
+        else
+        {
+            T newObj = GameObject.Instantiate(_prefab, _parent);
+            return newObj;
+        }
+    }
 
-//     public void Release(T obj)
-//     {
-//         obj.gameObject.SetActive(false);
-//         _pool.Enqueue(obj);
-//     }
-// }
+    public void Release(T obj)
+    {
+        obj.gameObject.SetActive(false);
+        _pool.Enqueue(obj);
+    }
+}

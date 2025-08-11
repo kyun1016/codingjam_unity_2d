@@ -1,4 +1,3 @@
 repository "My project/Template@14568597497146@cloud"
   path "/"
-    br "/main"
-    co "/main"
+    smartbranch "/main/kyun1016" changeset "40"                                                                                    

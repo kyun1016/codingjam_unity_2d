@@ -1,10 +1,30 @@
 public class Enum
 {
-    public enum Achive
+    public enum MovementType
     {
-        UnlockChar2,
-        UnlockChar3,
+        Close,
+        Mid,
+        Long
     }
+    public enum ItemCategory
+    {
+        special,
+        speed,
+        health,
+        protection
+    }
+    public enum ItemEffect
+    {
+        jumpHeight, // 1회 위로 순간이동
+        dashLength, // 1회 앞으로 순간이동
+        jumpSpeed, // 점프 속도
+        maxJumpSpeed, // 최대 점프 속도
+        speed, // 이동 속도
+        maxSpeed, // 최대 이동 속도
+        block, // 장애물 피격판정 무시
+        invulnerability // 무적 시간
+    }
+
     public enum Language
     {
         English,
@@ -12,83 +32,5 @@ public class Enum
         Japanese,
         Chinese,
         Spanish
-    }
-    public enum SFX
-    {
-        Dead,
-        Hit0,
-        Hit1,
-        LevelUp,
-        Lose,
-        Melee0,
-        Melee1,
-        Range,
-        Select,
-        Win
-    }
-    public enum PrefabType
-    {
-        Enemy,
-        MeleeBox,
-        MeleeCircle,
-        RangeBox,
-        RangeCircle,
-        DropItem,
-        FieldObject
-    }
-    public enum DebuffType
-    {
-        None,
-        TicDamage,
-        SlowCoef,
-        Size
-    }
-    public enum EffectType
-    {
-        None,
-        Stop
-    }
-    public enum DropItemSprite
-    {
-        Exp0,
-        Exp1,
-        Exp2,
-        Health,
-        Mag,
-        Gold0,
-        Gold1,
-        Gold2
-    }
-    public enum FieldObjectSprite
-    {
-        Box,
-        Candle,
-        Bush
-    }
-    public enum WeaponTag
-    {
-        Bullet,
-        Melee,
-        SpiderWeb,
-        Garlic
-    }
-
-    public enum WeaponType
-    {
-        Melee,
-        RangeBullet,
-        RangeDagger,
-        RangeAxe,
-        Garlic,
-        Web,
-        Boom,
-        ThrowBoom
-    }
-    public enum DescType
-    {
-        Melee,
-        Range,
-        Perk,
-        Heal
     }
 }

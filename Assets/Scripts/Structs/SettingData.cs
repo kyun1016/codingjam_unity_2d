@@ -13,6 +13,6 @@ public struct SettingData
     public int Width;
     public int Height;
     public bool Fullscreen;
-    public int RefreshRate;
+    public float RefreshRate;
     public int TotalGold;
 }

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1f13dc80a0313c94ea0bfceffdb55c94, type: 3}
+  m_Name: Item8_melona
+  m_EditorClassIdentifier: 
+  category: 2
+  trigger: 1
+  effectType: 0
+  itemID: 8
+  itemName: []
+  description: []
+  effectValue: 0
+  effectDuration: 0
+  gridPosition:
+  - {x: 0, y: 0}
+  - {x: 0, y: 1}
+  icon:
+  - {fileID: 4651130997444572660, guid: 345839160cbdc8741819c342470e5631, type: 3}
+  - {fileID: -1764906466, guid: 345839160cbdc8741819c342470e5631, type: 3}
+  dropRate: 0.3
+  image: {fileID: 4651130997444572660, guid: 4cadefb15919d594587c890b5757e983, type: 3}
